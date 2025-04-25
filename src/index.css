@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+	font-family: "Roboto", sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+.app {
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+	box-sizing: border-box;
+	overflow: auto;
+	background: fixed #fb6caa url("./common/assets/backgroundShapes.svg") center
+		no-repeat;
+	color: #000;
+}
