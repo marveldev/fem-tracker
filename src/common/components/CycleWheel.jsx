@@ -1,6 +1,6 @@
-import React, { useContext } from "react"
-import { AppContext } from "../../context/AppContext"
+import { useContext } from "react"
 import { Droplet, Moon, Sun, Heart } from "lucide-react"
+import { AppContext } from "../../context/AppContext"
 
 const CycleWheel = () => {
 	const { user, cycleInfo } = useContext(AppContext)
@@ -70,28 +70,28 @@ const CycleWheel = () => {
 					<path
 						d="M50 10 A40 40 0 0 1 88.2 34.2 L50 50 Z"
 						fill="#f87171"
-						opacity="0.8"
+						opacity="1"
 					/>
 
 					{/* Follicular phase segment */}
 					<path
 						d="M88.2 34.2 A40 40 0 0 1 65.8 88.2 L50 50 Z"
 						fill="#60a5fa"
-						opacity="0.8"
+						opacity="1"
 					/>
 
 					{/* Ovulation phase segment */}
 					<path
 						d="M65.8 88.2 A40 40 0 0 1 34.2 88.2 L50 50 Z"
 						fill="#fcd34d"
-						opacity="0.8"
+						opacity="1"
 					/>
 
 					{/* Luteal phase segment */}
 					<path
 						d="M34.2 88.2 A40 40 0 0 1 11.8 34.2 L50 50 Z"
 						fill="#f472b6"
-						opacity="0.8"
+						opacity="1"
 					/>
 
 					{/* Menstrual phase segment - second half */}
@@ -106,30 +106,34 @@ const CycleWheel = () => {
 
 					{/* Marker */}
 					<g transform={`rotate(${markerRotation} 50 50)`}>
-						<circle cx="50" cy="10" r="4" fill="#fb6caa" />
+						<circle cx="50" cy="10" r="4" fill="#f7f74b" />
 						<line
 							x1="50"
 							y1="14"
 							x2="50"
 							y2="20"
-							stroke="#fb6caa"
+							stroke="#f7f74b"
 							strokeWidth="2"
 						/>
 					</g>
 				</svg>
 
 				{/* Icons for each phase */}
-				<div className="absolute top-6 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-					<Droplet className="text-red-400" size={20} />
+				<div className="flex absolute top-4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white">
+					<Droplet size={20} />
+					<span>Menstrual</span>
 				</div>
-				<div className="absolute top-1/2 right-6 transform translate-y-1/2">
-					<Moon className="text-blue-400" size={20} />
+				<div className="absolute top-1/2 right-[-1em] transform translate-y-1/2 text-white">
+					<Moon size={20} />
+					<span>Follicular</span>
 				</div>
-				<div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 translate-y-1/2">
-					<Sun className="text-yellow-400" size={20} />
+				<div className="flex flex-col items-center absolute bottom-5 left-1/2 transform -translate-x-1/2 translate-y-1/2 text-white">
+					<Sun size={20} />
+					<span>Ovulation</span>
 				</div>
-				<div className="absolute top-1/2 left-6 transform -translate-y-1/2">
-					<Heart className="text-pink-400" size={20} />
+				<div className="flex flex-col items-center absolute top-1/2 left-0 transform -translate-y-1/2 text-white">
+					<Heart size={20} />
+					<span>Luteal</span>
 				</div>
 
 				{/* Current phase indicator in center */}
@@ -144,7 +148,7 @@ const CycleWheel = () => {
 			</div>
 
 			{/* Legend */}
-			<div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-4 text-sm text-[#f7f74b] bg-white bg-opacity-10 p-3 rounded-xl">
+			<div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-4 text-sm text-[#f7f74b] bg-white bg-opacity-10 p-3 rounded-xl shadow-sm">
 				<div className="flex items-center">
 					<div className="w-3 h-3 rounded-full bg-red-400 mr-2"></div>
 					<span>Menstrual ({user.periodLength} days)</span>

@@ -1,16 +1,16 @@
 import { useContext, useState } from "react"
 import { Calendar, Save } from "lucide-react"
 import { AppContext } from "../context/AppContext"
+import { useSnackbar } from "../common"
 
 const Settings = () => {
 	const { user, setUser } = useContext(AppContext)
+	const { showSnackbar } = useSnackbar()
 	const [formData, setFormData] = useState({
 		goal: user.goal,
-		hasPCOS: user.hasPCOS,
 		cycleLength: user.cycleLength,
 		periodLength: user.periodLength,
 	})
-
 	const handleChange = (e) => {
 		const { name, value, type, checked } = e.target
 		setFormData((prev) => ({
@@ -25,8 +25,7 @@ const Settings = () => {
 			...formData,
 		})
 
-		// Show success message or notification
-		alert("Settings saved successfully!")
+		showSnackbar("Settings saved successfully! 🎉")
 	}
 
 	return (
@@ -93,9 +92,13 @@ const Settings = () => {
 
 			<div className="p-4 rounded-md mb-6 bg-[#95275eab] text-white">
 				<p>About FemTrack</p>
-				<p className="bg-white bg-opacity-10 p-4 rounded mt-6 text-[#f7f74b]">
-					some text
-				</p>
+				<div className="bg-white bg-opacity-10 p-4 rounded mt-6">
+					<p className="text-[#f7f74b]">
+						FemTrack is a privacy-first period tracker app to help you
+						understand and navigate your menstrual journey.
+					</p>
+					<p className="text-xs">Version 1.0.0</p>
+				</div>
 			</div>
 		</div>
 	)

@@ -1,12 +1,14 @@
 import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import { Droplet, Moon, Sun, Heart } from "lucide-react"
-import { format, getHours } from "date-fns"
+import { format, getHours, differenceInCalendarDays } from "date-fns"
 import { AppContext } from "../context/AppContext"
 import { CycleWheel } from "../common"
 
 const Home = () => {
 	const { user, cycleInfo } = useContext(AppContext)
+	console.log({ user, cycleInfo })
+
 	const navigate = useNavigate()
 
 	const today = new Date()
@@ -21,28 +23,28 @@ const Home = () => {
 			return {
 				name: "Menstrual",
 				icon: Droplet,
-				color: "",
+				message: "Take it easy—it's your period time. ❤️",
 				bgColor: "bg-[#d14e87]",
 			}
 		} else if (cycleInfo.currentDay <= 14) {
 			return {
 				name: "Follicular",
 				icon: Moon,
-				color: "",
+				message: "You're gaining energy—follicular vibes.",
 				bgColor: "bg-[#d14e87]",
 			}
 		} else if (cycleInfo.currentDay <= 16) {
 			return {
 				name: "Ovulation",
 				icon: Sun,
-				color: "",
+				message: "Ovulation day! You're at your peak fertility.",
 				bgColor: "bg-[#d14e87]",
 			}
 		} else {
 			return {
 				name: "Luteal",
 				icon: Heart,
-				color: "",
+				message: "This is your luteal phase—rest and reflect.",
 				bgColor: "bg-[#d14e87]",
 			}
 		}
@@ -54,13 +56,25 @@ const Home = () => {
 	const getTimeOfDay = () => {
 		const hour = getHours(today)
 		if (hour >= 5 && hour < 12) {
-			return "Morning"
+			return "morning"
 		} else if (hour >= 12 && hour < 17) {
-			return "Afternoon"
+			return "afternoon"
 		} else if (hour >= 17 && hour < 21) {
-			return "Evening"
+			return "evening"
 		} else {
-			return "Night"
+			return "night"
+		}
+	}
+	const getDateDifferenceInDays = (dateString) =>
+		differenceInCalendarDays(dateString, today)
+
+	const getFertilityStatusMessage = () => {
+		if (today < cycleInfo.fertileWindow.start) {
+			return "Your fertile window is coming up soon."
+		} else if (today > cycleInfo.fertileWindow.end) {
+			return "You've passed your fertile window for this cycle."
+		} else {
+			return "You're currently in your fertile window"
 		}
 	}
 
@@ -71,21 +85,20 @@ const Home = () => {
 					Good {getTimeOfDay()}
 				</h3>
 				<p>
-					message <br />
+					{phase.message} <br />
 					Need to log anything?
 				</p>
 				<button
 					onClick={() => navigate("/calendar")}
-					className="bg-[#5B2333] rounded-3xl text-white my-4 h-10 w-40">
+					className="bg-[#5B2333] rounded-3xl text-white my-2 h-10 w-40">
 					<span>Log For Today</span>
 				</button>
-				<p className="text-opacity-80">Here's your health summary</p>
 			</div>
 
 			{/* Cycle Phase Card */}
 			<div className="p-4 rounded-md mb-6 bg-[#95275eab] text-white">
 				<div className="flex items-center mb-2">
-					<PhaseIcon className="mr-2" />
+					<PhaseIcon className="mr-2" size={20} />
 					<h2 className="text-lg font-semibold ">
 						Current Phase: {phase.name}
 					</h2>
@@ -95,12 +108,6 @@ const Home = () => {
 				</p>
 				<div className="mt-3 text-sm text-opacity-90 text-[#f7f74b]">
 					<p>Next period expected on {formatDate(cycleInfo.nextPeriodDate)}</p>
-					{user.goal === "fertility" && (
-						<p className="mt-1">
-							Fertile window: {formatDate(cycleInfo.fertileWindow.start)} -{" "}
-							{formatDate(cycleInfo.fertileWindow.end)}
-						</p>
-					)}
 				</div>
 			</div>
 
@@ -145,17 +152,17 @@ const Home = () => {
 			<div className="bg-[#95275eab] text-white p-4 rounded-md mb-6">
 				<div className="flex justify-between mb-4">
 					<p className="font-bold">Period Length</p>
-					<p className="text-[#f7f74b]">21 days</p>
+					<p className="text-[#f7f74b]">{user.periodLength} days</p>
 				</div>
 
 				<div className="flex justify-between mb-4">
 					<p className="font-bold">Cycle length</p>
-					<p className="text-[#f7f74b]">22 days</p>
+					<p className="text-[#f7f74b]">{user.cycleLength} days</p>
 				</div>
 
 				<div className="flex justify-between">
 					<p className="font-bold">Last period date</p>
-					<p className="text-[#f7f74b]">Apr 5</p>
+					<p className="text-[#f7f74b]">{formatDate(user.lastPeriod)}</p>
 				</div>
 			</div>
 
@@ -172,8 +179,12 @@ const Home = () => {
 								</span>{" "}
 								Next Period
 							</p>
-							<p className="text-4xl text-[#f7f74b]">Apr 21</p>
-							<p className="text-s text-[#f7f74b]">in 8 days</p>
+							<p className="text-4xl text-[#f7f74b]">
+								{formatDate(cycleInfo.nextPeriodDate).split(",")[0]}
+							</p>
+							<p className="text-s text-[#f7f74b]">
+								in {getDateDifferenceInDays(cycleInfo.nextPeriodDate)} days
+							</p>
 						</div>
 					</div>
 
@@ -181,32 +192,31 @@ const Home = () => {
 						<div className="flex flex-col gap-2">
 							<p className="flex gap-2 text-base font-bold text-[#fdfdfd]">
 								<span>
-									<Droplet className="text-[#f7f74b]" size={24} />
+									<Moon className="text-[#f7f74b]" size={24} />
 								</span>{" "}
 								Fertility Window
 							</p>
-							<p className="text-4xl text-[#f7f74b]">Apr 21 - Apr 25</p>
+							<p className="text-4xl text-[#f7f74b]">
+								{formatDate(cycleInfo.fertileWindow.start).split(",")[0]} -{" "}
+								{formatDate(cycleInfo.fertileWindow.end).split(",")[0]}
+							</p>
 							<p className="text-sm text-[#f7f74b]">
-								You've passed your fertile window for this cycle
+								{getFertilityStatusMessage()}
 							</p>
 						</div>
 					</div>
 
-					{user.goal === "fertility" && (
-						<div className="flex justify-between items-center bg-white bg-opacity-10 p-3 rounded-xl shadow-sm">
-							<div className="flex items-center">
-								<Sun className="text-[#f7f74b] mr-3" size={24} />
-								<div>
-									<p className="text-base font-medium text-[#fdfdfd]">
-										Ovulation
-									</p>
-									<p className="text-sm text-[#f7f74b]">
-										{formatDate(cycleInfo.ovulationDate)}
-									</p>
-								</div>
+					<div className="flex justify-between items-center bg-white bg-opacity-10 p-3 rounded-xl shadow-sm">
+						<div className="flex items-center">
+							<Sun className="text-[#f7f74b] mr-3" size={24} />
+							<div>
+								<p className="text-base font-bold text-[#fdfdfd]">Ovulation</p>
+								<p className="text-sm text-[#f7f74b]">
+									{formatDate(cycleInfo.ovulationDate)}
+								</p>
 							</div>
 						</div>
-					)}
+					</div>
 				</div>
 			</div>
 		</div>
