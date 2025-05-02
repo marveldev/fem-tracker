@@ -2,14 +2,14 @@ import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { ArrowLeft } from "lucide-react"
 import { motion } from "framer-motion"
-import { CalendarPicker, SnackbarProvider } from "../common"
+import { CalendarPicker } from "../common"
 
-const PeriodDateOnboarding = ({ onDataSubmit }) => {
+const PeriodDateOnboarding = ({ setUserData }) => {
 	const navigate = useNavigate()
 	const [selectedDate, setSelectedDate] = useState(null)
 	const [cycleLength, setCycleLength] = useState(28)
 	const [periodLength, setPeriodLength] = useState(5)
-	const [showSnackbar, setShowSnackbar] = useState(false)
+	const [SnackbarIsVisible, setSnackbarIsVisible] = useState(false)
 
 	useEffect(() => {
 		const savedCycleLength = localStorage.getItem("cycleLength")
@@ -29,7 +29,7 @@ const PeriodDateOnboarding = ({ onDataSubmit }) => {
 		if (isValid) {
 			setSelectedDate(date)
 		} else {
-			setShowSnackbar(true)
+			setSnackbarIsVisible(true)
 		}
 
 		return isValid
@@ -37,7 +37,7 @@ const PeriodDateOnboarding = ({ onDataSubmit }) => {
 
 	const handleSubmit = () => {
 		if (!selectedDate) {
-			return setShowSnackbar(true)
+			return setSnackbarIsVisible(true)
 		}
 
 		const userData = {
@@ -50,7 +50,7 @@ const PeriodDateOnboarding = ({ onDataSubmit }) => {
 		localStorage.removeItem("cycleLength")
 		localStorage.removeItem("periodLength")
 
-		onDataSubmit(userData)
+		setUserData(userData)
 		navigate("/home")
 	}
 
@@ -106,10 +106,10 @@ const PeriodDateOnboarding = ({ onDataSubmit }) => {
 				</div>
 			</motion.div>
 
-			<SnackbarProvider
-				message="Please select a valid date (today or earlier)"
-				isVisible={showSnackbar}
-				onClose={() => setShowSnackbar(false)}
+			<Snackbar
+				message={"You can't log  periods for future dates"}
+				isVisible={SnackbarIsVisible}
+				onClose={() => setSnackbarIsVisible(false)}
 			/>
 		</div>
 	)

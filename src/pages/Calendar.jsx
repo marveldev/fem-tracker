@@ -10,6 +10,7 @@ import {
 	isSameDay,
 	subMonths,
 	addMonths,
+	isAfter,
 } from "date-fns"
 import {
 	ChevronLeft,
@@ -21,15 +22,20 @@ import {
 	Info,
 } from "lucide-react"
 import { AppContext } from "../context/AppContext"
-import { SymptomLogger } from "../common"
+import { Snackbar, SymptomLogger } from "../common"
 
 const Calendar = () => {
 	const [currentDate, setCurrentDate] = useState(new Date())
 	const [selectedDate, setSelectedDate] = useState(new Date())
 	const [showLogger, setShowLogger] = useState(false)
+	const [SnackbarIsVisible, setSnackbarIsVisible] = useState(false)
 	const { cycles, cycleInfo, user } = useContext(AppContext)
 
 	const onDateClick = (day) => {
+		if (isAfter(day, new Date())) {
+			return setSnackbarIsVisible(true)
+		}
+
 		setSelectedDate(day)
 		setShowLogger(true)
 	}
@@ -269,6 +275,12 @@ const Calendar = () => {
 					)}
 				</div>
 			</div>
+
+			<Snackbar
+				message={"You can't log  periods for future dates"}
+				isVisible={SnackbarIsVisible}
+				onClose={() => setSnackbarIsVisible(false)}
+			/>
 
 			{showLogger && (
 				<SymptomLogger

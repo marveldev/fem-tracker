@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react"
+import { useState, useContext } from "react"
 import { format } from "date-fns"
 import {
 	X,
@@ -16,16 +16,11 @@ const SymptomLogger = ({ date, onClose }) => {
 		flow: "",
 		mood: "",
 		pain: "",
-		notes: "",
 	})
 
-	const handleChange = (e) => {
-		const { name, value } = e.target
-		setSymptoms((prev) => ({ ...prev, [name]: value }))
-	}
+	const handleSubmit = (event) => {
+		event.preventDefault()
 
-	const handleSubmit = (e) => {
-		e.preventDefault()
 		logSymptom(date, symptoms)
 		onClose()
 	}
@@ -83,7 +78,7 @@ const SymptomLogger = ({ date, onClose }) => {
 					</button>
 				</div>
 
-				<form onSubmit={handleSubmit}>
+				<form onSubmit={(event) => handleSubmit(event)}>
 					<div className="mb-5">
 						<div className="flex items-center mb-3">
 							<Droplet size={18} className="text-[#fb6caa] mr-2" />
@@ -193,20 +188,6 @@ const SymptomLogger = ({ date, onClose }) => {
 								</button>
 							))}
 						</div>
-					</div>
-
-					<div className="mb-5">
-						<div className="flex items-center mb-3">
-							<Frown size={18} className="text-[#fb6caa] mr-2" />
-							<label className="text-gray-700 font-medium">Notes</label>
-						</div>
-						<textarea
-							name="notes"
-							value={symptoms.notes}
-							onChange={handleChange}
-							className="w-full p-3 border border-gray-300 rounded-lg focus:border-[#fb6caa] focus:ring-1 focus:ring-[#fb6caa] focus:outline-none"
-							rows="3"
-							placeholder="Add any additional notes or symptoms..."></textarea>
 					</div>
 
 					<div className="flex justify-end">

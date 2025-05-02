@@ -1,11 +1,11 @@
 import { useContext, useState } from "react"
 import { Calendar, Save } from "lucide-react"
 import { AppContext } from "../context/AppContext"
-import { useSnackbar } from "../common"
+// import { useSnackbar } from "../common"
 
 const Settings = () => {
 	const { user, setUser } = useContext(AppContext)
-	const { showSnackbar } = useSnackbar()
+	// const { showSnackbar } = useSnackbar()
 	const [formData, setFormData] = useState({
 		goal: user.goal,
 		cycleLength: user.cycleLength,
@@ -25,7 +25,7 @@ const Settings = () => {
 			...formData,
 		})
 
-		showSnackbar("Settings saved successfully! 🎉")
+		// showSnackbar("Settings saved successfully! 🎉")
 	}
 
 	return (

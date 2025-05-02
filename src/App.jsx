@@ -7,7 +7,7 @@ import {
 	useLocation,
 } from "react-router-dom"
 import { ContextProvider } from "./context/AppContext"
-import { BottomNav, PageHeader, SnackbarProvider } from "./common"
+import { BottomNav, PageHeader } from "./common"
 import {
 	Calendar,
 	CycleLengthOnboarding,
@@ -18,8 +18,9 @@ import {
 	Welcome,
 } from "./pages"
 
-function AppContent({ userData, setUserData }) {
+function AppContent({ userData, setUserData, showSnackbar }) {
 	const { pathname } = useLocation()
+
 	const hiddenNavPaths = [
 		"/",
 		"/onboarding/cycle-length",
@@ -27,15 +28,18 @@ function AppContent({ userData, setUserData }) {
 		"/onboarding/period-date",
 	]
 
+	const showHeaderAndFooter = !hiddenNavPaths.includes(pathname)
+
 	const handleDataSubmit = (data) => {
 		setUserData(data)
+		showSnackbar("Your data has been saved successfully!")
 	}
 
 	return (
 		<div className="app">
-			{!hiddenNavPaths.includes(pathname) && <PageHeader />}
+			{showHeaderAndFooter && <PageHeader />}
 
-			<div className="absolute lg:w-[65%] m-auto left-0 right-0 h-full">
+			<div className="absolute left-0 right-0 m-auto h-full lg:w-[65%]">
 				<Routes>
 					<Route
 						path="/"
@@ -59,7 +63,7 @@ function AppContent({ userData, setUserData }) {
 							userData ? (
 								<Navigate to="/home" />
 							) : (
-								<PeriodDateOnboarding onDataSubmit={handleDataSubmit} />
+								<PeriodDateOnboarding setUserData={setUserData} />
 							)
 						}
 					/>
@@ -67,17 +71,18 @@ function AppContent({ userData, setUserData }) {
 					<Route path="/settings" element={<Settings />} />
 					<Route path="/home" element={<Home />} />
 				</Routes>
-				{!hiddenNavPaths.includes(pathname) && (
+
+				{showHeaderAndFooter && (
 					<>
-						<div className="text-center text-xs mt-24">
-							FemTrack - Your privacy-first period tracker © 2025
+						<div className="mt-24 text-center text-xs">
+							FemTracker - Your privacy-first period tracker © 2025
 						</div>
 						<div className="h-40 lg:h-40" />
 					</>
 				)}
 			</div>
 
-			{!hiddenNavPaths.includes(pathname) && <BottomNav />}
+			{showHeaderAndFooter && <BottomNav />}
 		</div>
 	)
 }
@@ -96,11 +101,9 @@ function App() {
 
 	return (
 		<ContextProvider>
-			<SnackbarProvider>
-				<Router>
-					<AppContent userData={userData} setUserData={setUserData} />
-				</Router>
-			</SnackbarProvider>
+			<Router>
+				<AppContent userData={userData} setUserData={setUserData} />
+			</Router>
 		</ContextProvider>
 	)
 }
