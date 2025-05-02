@@ -162,21 +162,27 @@ const Calendar = () => {
 							!isCurrentMonth
 								? "text-[#000000a5] opacity-50"
 								: isToday
-								? "border-white font-bold"
+								? "bg-[#c9e0ff]"
 								: "text-black"
-						} ${isSelected ? "bg-[#d14e87] rounded-lg" : ""}`}
+						} ${isSelected ? "border-[#d52a74] rounded-lg" : ""}`}
 						onClick={() => isCurrentMonth && onDateClick(cloneDay)}>
 						<div
 							className={`flex flex-col items-center justify-center h-full ${
 								isPeriod
-									? "bg-white bg-opacity-20 text-white rounded-lg"
-									: isFertile
-									? "bg-[#d14e87] bg-opacity-70 text-white rounded-lg"
+									? "bg-[#000] bg-opacity-20 text-white rounded-lg"
 									: isOvulation
-									? "bg-yellow-300 bg-opacity-30 text-white rounded-lg"
+									? "bg-[#1e1e3ae0] text-white rounded-lg"
+									: isFertile
+									? "bg-[#5b5b7ee0] text-white rounded-lg"
 									: ""
 							}`}>
 							<span className="text-sm font-medium">{format(day, "d")}</span>
+
+							{isToday && (
+								<div className="mt-1 text-xs">
+									<Moon size={14} className="text-[#fb6caa]" />
+								</div>
+							)}
 
 							{isPeriod && (
 								<div className="mt-1 text-xs">
@@ -217,7 +223,7 @@ const Calendar = () => {
 		<div className="px-3 mt-8">
 			<p className="mb-2">Track your cycle and symptoms</p>
 
-			<div className="bg-[#95275eab] rounded-md lg:scale-125 lg:mt-20 pt-4">
+			<div className="bg-[#95275eab] rounded-md lg:scale-125 lg:mt-20 pt-4 cursor-pointer">
 				{renderHeader()}
 				<div className="bg-[#ffffffe2]">
 					{renderDays()}
