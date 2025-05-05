@@ -15,6 +15,7 @@ import {
 	PeriodDateOnboarding,
 	PeriodLengthOnboarding,
 	Settings,
+	Track,
 	Welcome,
 } from "./pages"
 
@@ -68,6 +69,8 @@ function AppContent({ userData, setUserData, showSnackbar }) {
 						}
 					/>
 					<Route path="/calendar" element={<Calendar />} />
+					<Route path="/track/" element={<Track />} />
+					<Route path="/track/:date" element={<Track />} />
 					<Route path="/settings" element={<Settings />} />
 					<Route path="/home" element={<Home />} />
 				</Routes>

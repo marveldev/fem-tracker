@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { ArrowLeft } from "lucide-react"
 import { motion } from "framer-motion"
-import { CalendarPicker } from "../common"
+import { CalendarPicker, Snackbar } from "../common"
 
 const PeriodDateOnboarding = ({ setUserData }) => {
 	const navigate = useNavigate()

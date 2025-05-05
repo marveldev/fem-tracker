@@ -7,9 +7,8 @@ import { CycleWheel } from "../common"
 
 const Home = () => {
 	const { user, cycleInfo } = useContext(AppContext)
-	console.log({ user, cycleInfo })
-
 	const navigate = useNavigate()
+	console.log(user)
 
 	const today = new Date()
 
