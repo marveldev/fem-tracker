@@ -19,7 +19,7 @@ import {
 	Edit,
 } from "lucide-react" // Added more icons
 import { AnimatePresence } from "framer-motion"
-import { CalendarPicker } from "../common"
+import { CalendarPicker, Snackbar } from "../common"
 
 // Helper to get/set tracking data
 const getTrackingData = (date) => {
@@ -116,6 +116,8 @@ const Track = () => {
 	)
 	const [trackingData, setTrackingData] = useState({})
 	const [showCalendar, setShowCalendar] = useState(false) // State for calendar visibility
+	const [SnackbarIsVisible, setSnackbarIsVisible] = useState(false)
+	const [isSaved, setIsSaved] = useState(false)
 
 	// Load data when date changes
 	useEffect(() => {
@@ -131,20 +133,26 @@ const Track = () => {
 
 	const handleDataChange = useCallback(
 		(key, value) => {
+			setIsSaved(false)
 			setTrackingData((prevData) => {
 				const newData = { ...prevData, [key]: value }
-				saveTrackingData(currentDate, newData) // Auto-save on change
 				return newData
 			})
 		},
 		[currentDate]
 	)
 
+	const handleSubmit = () => {
+		saveTrackingData(currentDate, trackingData)
+		setIsSaved(true)
+		setSnackbarIsVisible(true)
+	}
+
 	const handleMultiSelectChange = useCallback(
 		(key, value) => {
+			setIsSaved(false)
 			setTrackingData((prevData) => {
 				const newData = { ...prevData, [key]: value }
-				saveTrackingData(currentDate, newData)
 				return newData
 			})
 		},
@@ -153,6 +161,7 @@ const Track = () => {
 
 	const handleDateSelectFromCalendar = (day) => {
 		setCurrentDate(day)
+		setIsSaved(false)
 		setShowCalendar(false) // Hide calendar after selection
 	}
 
@@ -334,9 +343,6 @@ const Track = () => {
 			</AnimatePresence>
 
 			<main className="flex-1 p-4 mb-16 overflow-y-auto">
-				{" "}
-				{/* Added mb-16 */}
-				{/* --- Logging Sections --- */}
 				<Section title="Flow" icon={Droplet}>
 					<SingleSelectButtons
 						options={flowOptions}
@@ -417,7 +423,26 @@ const Track = () => {
 						className="w-full border border-gray-300 rounded-lg p-2 text-sm h-24 focus:ring-1 focus:ring-pink-500 focus:border-pink-500"
 						placeholder="Add any additional notes for the day..."></textarea>
 				</Section>
+				<button
+					onClick={handleSubmit}
+					disabled={isSaved}
+					className={`w-full py-2 rounded-lg text-white ${
+						isSaved
+							? "bg-gray-400 cursor-not-allowed"
+							: "bg-pink-600 hover:bg-pink-700"
+					}`}>
+					{isSaved ? "Saved" : "Submit"}
+				</button>
 			</main>
+
+			<Snackbar
+				message={`Your entry for ${format(
+					currentDate,
+					"MMMM d, yy"
+				)} has been saved.`}
+				isVisible={SnackbarIsVisible}
+				onClose={() => setSnackbarIsVisible(false)}
+			/>
 		</div>
 	)
 }
