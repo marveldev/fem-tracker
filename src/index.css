@@ -14,7 +14,7 @@ body {
 	height: 100vh;
 	box-sizing: border-box;
 	overflow: auto;
-	background: fixed #fb6caa url("./common/assets/backgroundShapes.svg") center
+	background: fixed #e8a2b8 url("./common/assets/backgroundShapes.svg") center
 		no-repeat;
 	color: #000;
 }

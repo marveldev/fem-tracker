@@ -18,7 +18,7 @@ import {
 	Briefcase,
 	Edit,
 } from "lucide-react" // Added more icons
-import { AnimatePresence } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { CalendarPicker, Snackbar } from "../common"
 
 // Helper to get/set tracking data
@@ -323,12 +323,17 @@ const Track = () => {
 	]
 
 	return (
-		<div className="min-h-screen bg-pink-50 flex flex-col">
+		<motion.div
+			className="min-h-screen flex flex-col"
+			initial={{ opacity: 0, y: 20 }}
+			animate={{ opacity: 1, y: 0 }}
+			exit={{ opacity: 0, y: 20 }}
+			transition={{ duration: 0.5 }}>
 			<div className="h-16" />
 			{/* Date Navigator Header */}
 			<button
 				onClick={() => setShowCalendar(!showCalendar)}
-				className="text-lg font-semibold text-pink-700 text-center underline">
+				className="text-lg font-semibold text-center underline">
 				{format(currentDate, "EEEE, MMMM d, yyyy")}
 			</button>
 
@@ -429,7 +434,7 @@ const Track = () => {
 					className={`w-full py-2 rounded-lg text-white ${
 						isSaved
 							? "bg-gray-400 cursor-not-allowed"
-							: "bg-pink-600 hover:bg-pink-700"
+							: "bg-[#5B2333] hover:bg-pink-700"
 					}`}>
 					{isSaved ? "Saved" : "Submit"}
 				</button>
@@ -443,7 +448,7 @@ const Track = () => {
 				isVisible={SnackbarIsVisible}
 				onClose={() => setSnackbarIsVisible(false)}
 			/>
-		</div>
+		</motion.div>
 	)
 }
 

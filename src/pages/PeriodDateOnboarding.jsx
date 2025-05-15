@@ -68,7 +68,7 @@ const PeriodDateOnboarding = ({ setUserData }) => {
 				</button>
 				<div className="flex-1 flex justify-center">
 					<div className="w-48 h-1 bg-gray-200 rounded-full overflow-hidden">
-						<div className="h-full w-full bg-pink-500"></div>
+						<div className="h-full w-full bg-[#5B2333]"></div>
 					</div>
 				</div>
 				<div className="w-10"></div> {/* Spacer for balance */}

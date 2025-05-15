@@ -291,16 +291,19 @@ const Calendar = () => {
 	const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
 	return (
-		<div className="min-h-screen bg-pink-50 flex flex-col">
-			<header className="bg-white p-4 shadow-sm sticky top-0 z-20">
-				<h1 className="text-2xl font-bold text-pink-700 text-center">
-					Calendar
-				</h1>
-			</header>
+		<motion.div
+			className="min-h-screen flex flex-col"
+			initial={{ opacity: 0, y: 20 }}
+			animate={{ opacity: 1, y: 0 }}
+			exit={{ opacity: 0, y: 20 }}
+			transition={{ duration: 0.5 }}>
+			<div className="h-16" />
+			<div className="px-6 text-sm">
+				<p>Long press to log period · Tap for details</p>
+			</div>
 			<main className="flex-1 p-4 mb-16">
-				{" "}
 				{/* Added mb-16 for bottom nav space */}
-				<div className="bg-white rounded-xl shadow-md p-4 mb-4">
+				<div className="bg-white rounded-lg p-4 mb-4">
 					{/* Month Navigation */}
 					<div className="flex justify-between items-center mb-4">
 						<button
@@ -598,7 +601,7 @@ const Calendar = () => {
 					</motion.div>
 				)}
 			</AnimatePresence>
-		</div>
+		</motion.div>
 	)
 }
 

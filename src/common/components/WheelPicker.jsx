@@ -12,6 +12,18 @@ const WheelPicker = ({ options, initialValue, onChange }) => {
 		}
 	}, [initialValue])
 
+	useEffect(() => {
+		if (pickerRef.current && initialValue) {
+			const index = options.indexOf(initialValue)
+			if (index !== -1) {
+				pickerRef.current.scrollTo({
+					top: index * itemHeight,
+					behavior: "auto", // or "smooth" if you want animation
+				})
+			}
+		}
+	}, [initialValue, options])
+
 	const handleScroll = () => {
 		const scrollPosition = pickerRef.current.scrollTop
 		const selectedIndex = Math.round(scrollPosition / itemHeight)

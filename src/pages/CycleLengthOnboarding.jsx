@@ -6,7 +6,7 @@ import WheelPicker from "../common/components/WheelPicker"
 
 const CycleLengthOnboarding = () => {
 	const navigate = useNavigate()
-	const [cycleLength, setCycleLength] = useState(28)
+	const [cycleLength, setCycleLength] = useState(23)
 
 	const cycleLengthOptions = Array.from({ length: 20 }, (_, i) => i + 21) // 21-40
 
@@ -25,7 +25,7 @@ const CycleLengthOnboarding = () => {
 				</button>
 				<div className="flex-1 flex justify-center">
 					<div className="w-48 h-1 bg-gray-200 rounded-full overflow-hidden">
-						<div className="h-full w-1/3 bg-pink-500"></div>
+						<div className="h-full w-1/3 bg-[#5B2333]"></div>
 					</div>
 				</div>
 				<div className="w-10"></div> {/* Spacer for balance */}

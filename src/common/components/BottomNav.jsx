@@ -13,7 +13,7 @@ const BottomNav = () => {
 	]
 
 	return (
-		<div className="fixed bottom-0 left-0 right-0 h-16 bg-[#fb6caa] shadow-lg border border-[#2e2e2e2e]">
+		<div className="fixed bottom-0 left-0 right-0 h-16 bg-[#e8a2b8] shadow-lg border border-[#2e2e2e2e]">
 			<div className="flex justify-around items-center">
 				{navItems.map((item) => {
 					const isActive =

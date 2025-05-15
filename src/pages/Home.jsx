@@ -1,4 +1,5 @@
 import { useContext } from "react"
+import { motion } from "framer-motion"
 import { useNavigate } from "react-router-dom"
 import { Droplet, Moon, Sun, Heart } from "lucide-react"
 import { format, getHours, differenceInCalendarDays } from "date-fns"
@@ -8,7 +9,6 @@ import { CycleWheel } from "../common"
 const Home = () => {
 	const { user, cycleInfo } = useContext(AppContext)
 	const navigate = useNavigate()
-	console.log(user)
 
 	const today = new Date()
 
@@ -78,7 +78,13 @@ const Home = () => {
 	}
 
 	return (
-		<div className="px-3 mt-8">
+		<motion.div
+			className="px-3 mt-8"
+			initial={{ opacity: 0, y: 20 }}
+			animate={{ opacity: 1, y: 0 }}
+			exit={{ opacity: 0, y: 20 }}
+			transition={{ duration: 0.5 }}>
+			<div className="h-8" />
 			<div className="mb-6">
 				<h3 className="text-2xl mb-2 text-[#353535] font-bold">
 					Good {getTimeOfDay()}
@@ -218,7 +224,7 @@ const Home = () => {
 					</div>
 				</div>
 			</div>
-		</div>
+		</motion.div>
 	)
 }
 
