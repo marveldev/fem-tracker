@@ -3,12 +3,19 @@ import { createContext, useState, useEffect } from "react"
 export const AppContext = createContext()
 
 export const ContextProvider = ({ children }) => {
+	const saved = JSON.parse(localStorage.getItem("userData")) || {}
+
+	const getValidDate = (dateStr) => {
+		const d = new Date(dateStr)
+		return isNaN(d) ? new Date() : d
+	}
+
 	// User data
 	const [user, setUser] = useState({
-		goal: "tracking", // 'tracking' or 'fertility'
-		cycleLength: 28,
-		periodLength: 5,
-		lastPeriod: new Date(2025, 3, 1),
+		goal: saved.goal || "tracking",
+		cycleLength: saved.cycleLength || 28,
+		periodLength: saved.periodLength || 5,
+		lastPeriod: getValidDate(saved.lastPeriodStartDate),
 	})
 
 	// Period tracking data

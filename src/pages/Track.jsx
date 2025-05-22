@@ -333,7 +333,7 @@ const Track = () => {
 			{/* Date Navigator Header */}
 			<button
 				onClick={() => setShowCalendar(!showCalendar)}
-				className="text-lg font-semibold text-center underline">
+				className="text-lg font-semibold text-center underline text-pink-700">
 				{format(currentDate, "EEEE, MMMM d, yyyy")}
 			</button>
 

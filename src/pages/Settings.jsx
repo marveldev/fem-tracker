@@ -1,30 +1,27 @@
-import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import { useState, useEffect, useContext } from "react"
 import { Save, Info, AlertTriangle } from "lucide-react"
 import { motion } from "framer-motion"
+import { AppContext } from "../context/AppContext"
 
 const Settings = () => {
-	const [userData, setUserData] = useState(null)
 	const [cycleLength, setCycleLength] = useState("")
 	const [periodLength, setPeriodLength] = useState("")
 	const [trackingGoal, setTrackingGoal] = useState("track_periods")
 	const [errors, setErrors] = useState({})
 	const [isSaved, setIsSaved] = useState(false)
+	const { user, setUser } = useContext(AppContext)
 
 	useEffect(() => {
-		const savedData = localStorage.getItem("userData")
-		if (savedData) {
-			const parsedData = JSON.parse(savedData)
-			setUserData(parsedData)
-			setCycleLength(parsedData.cycleLength?.toString() || "28")
-			setPeriodLength(parsedData.periodLength?.toString() || "5")
-			setTrackingGoal(parsedData.trackingGoal || "track_periods")
+		if (user) {
+			setCycleLength(user.cycleLength?.toString() || "28")
+			setPeriodLength(user.periodLength?.toString() || "5")
+			setTrackingGoal(user.goal || "track_periods")
 		} else {
 			// Default values if no user data found (should ideally not happen if onboarding is complete)
 			setCycleLength("28")
 			setPeriodLength("5")
 		}
-	}, [])
+	}, [user])
 
 	const validateField = (name, value) => {
 		let errorMsg = ""
@@ -73,20 +70,17 @@ const Settings = () => {
 			return
 		}
 
-		const updatedUserData = {
-			...userData, // Preserve other existing data like lastPeriodStartDate
+		const updatedUser = {
+			...user, // ✅ use context user, not userData
 			cycleLength: parseInt(cycleLength, 10),
 			periodLength: parseInt(periodLength, 10),
-			trackingGoal: trackingGoal,
+			goal: trackingGoal,
 		}
 
-		localStorage.setItem("userData", JSON.stringify(updatedUserData))
-		setUserData(updatedUserData) // Update local state if needed elsewhere on this page
+		setUser(updatedUser)
+		localStorage.setItem("userData", JSON.stringify(updatedUser)) // optional
 		setIsSaved(true)
-		setErrors({}) // Clear errors on successful save
-
-		// Optional: Navigate away or show persistent success message
-		// navigate('/home'); // Example: navigate to home after save
+		setErrors({})
 	}
 
 	const canSave =
@@ -95,7 +89,7 @@ const Settings = () => {
 		cycleLength.trim() !== "" &&
 		periodLength.trim() !== ""
 
-	if (!userData && cycleLength === "") {
+	if (cycleLength === "") {
 		// Still loading or no data
 		return (
 			<div className="min-h-screen bg-pink-50 flex items-center justify-center">
@@ -231,7 +225,7 @@ const Settings = () => {
 						disabled={!canSave}
 						className={`w-full flex items-center justify-center py-2.5 px-4 text-sm font-medium text-white rounded-lg shadow-md transition-colors ${
 							canSave
-								? "bg-pink-600 hover:bg-pink-700"
+								? "bg-[#5B2333] hover:bg-pink-700"
 								: "bg-gray-400 cursor-not-allowed"
 						}`}>
 						<Save size={18} className="mr-2" />
