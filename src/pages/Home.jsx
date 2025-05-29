@@ -187,9 +187,6 @@ const Home = () => {
 							<p className="text-4xl text-[#f7f74b]">
 								{formatDate(cycleInfo.nextPeriodDate).split(",")[0]}
 							</p>
-							<p className="text-s text-[#f7f74b]">
-								in {getDateDifferenceInDays(cycleInfo.nextPeriodDate)} days
-							</p>
 						</div>
 					</div>
 
