@@ -86,7 +86,7 @@ const Home = () => {
 			transition={{ duration: 0.5 }}>
 			<div className="h-8" />
 			<div className="mb-6">
-				<h3 className="text-2xl mb-2 text-[#353535] font-bold">
+				<h3 className="text-2xl mb-2 font-semibold text-pink-700">
 					Good {getTimeOfDay()}
 				</h3>
 				<p>
@@ -101,36 +101,36 @@ const Home = () => {
 			</div>
 
 			{/* Cycle Phase Card */}
-			<div className="p-4 rounded-md mb-6 bg-[#95275eab] text-white">
-				<div className="flex items-center mb-2">
-					<PhaseIcon className="mr-2" size={20} />
-					<h2 className="text-lg font-semibold ">
-						Current Phase: {phase.name}
-					</h2>
-				</div>
-				<p className="text-opacity-90 text-[#f7f74b]">
+			<div className="p-4 rounded-xl shadow-md bg-white mb-4">
+				<h3 className="text-md font-semibold text-gray-700 mb-3 flex items-center">
+					<PhaseIcon className="mr-2 text-pink-600" size={18} />
+					Current Phase: {phase.name}
+				</h3>
+				<p className="text-opacity-90">
 					Day {cycleInfo.currentDay} of your cycle
 				</p>
-				<div className="mt-3 text-sm text-opacity-90 text-[#f7f74b]">
+				<div className="mt-3 text-sm text-opacity-90 text-pink-700">
 					<p>Next period expected on {formatDate(cycleInfo.nextPeriodDate)}</p>
 				</div>
 			</div>
 
 			{/* Cycle Wheel */}
-			<div className="bg-[#95275eab] p-4 rounded-md mb-6">
-				<h2 className="text-lg font-semibold mb-2 text-white">
+			<div className="bg-white p-4 rounded-xl mb-4 shadow-md">
+				<h2 className="text-lg font-semibold mb-2 text-gray-700">
 					Your Cycle Wheel
 				</h2>
 				<CycleWheel />
 			</div>
 
 			{/* Today's Tips */}
-			<div className="bg-[#95275eab] text-white p-4 rounded-md mb-6">
-				<h2 className="text-lg font-semibold mb-3">Today's Tips</h2>
+			<div className="bg-white p-4 rounded-xl mb-4 shadow-md">
+				<h2 className="text-md font-semibold text-gray-700 mb-3">
+					Today's Tips
+				</h2>
 				<div className="space-y-3">
 					<div className="flex items-start">
 						<div className="h-2 w-2 rounded-full bg-[#fb6caa] mt-2 mr-2"></div>
-						<p className="text-[#f7f74b]">
+						<p className="text-pink-700">
 							Stay hydrated to help reduce bloating during your {phase.name}{" "}
 							phase.
 						</p>
@@ -138,7 +138,7 @@ const Home = () => {
 					{phase.name === "Menstrual" && (
 						<div className="flex items-start">
 							<div className="h-2 w-2 rounded-full bg-[#fb6caa] mt-2 mr-2"></div>
-							<p className="text-[#f7f74b]">
+							<p className="text-pink-700">
 								Warm compresses can help alleviate menstrual cramps.
 							</p>
 						</div>
@@ -146,7 +146,7 @@ const Home = () => {
 					{phase.name === "Ovulation" && user.goal === "fertility" && (
 						<div className="flex items-start">
 							<div className="h-2 w-2 rounded-full bg-[#fb6caa] mt-2 mr-2"></div>
-							<p className="text-[#f7f74b]">
+							<p className="text-pink-700">
 								This is your most fertile time if you're trying to conceive.
 							</p>
 						</div>
@@ -154,66 +154,77 @@ const Home = () => {
 				</div>
 			</div>
 
-			<div className="bg-[#95275eab] text-white p-4 rounded-md mb-6">
+			<div className="bg-white p-4 rounded-xl mb-4 shadow-md">
 				<div className="flex justify-between mb-4">
-					<p className="font-bold">Period Length</p>
-					<p className="text-[#f7f74b]">{user.periodLength} days</p>
+					<p className="text-md font-semibold text-gray-700">Period Length</p>
+					<p className="text-opacity-90 text-pink-700">
+						{user.periodLength} days
+					</p>
 				</div>
 
 				<div className="flex justify-between mb-4">
-					<p className="font-bold">Cycle length</p>
-					<p className="text-[#f7f74b]">{user.cycleLength} days</p>
+					<p className="text-md font-semibold text-gray-700">Cycle length</p>
+					<p className="text-opacity-90 text-pink-700">
+						{user.cycleLength} days
+					</p>
 				</div>
 
 				<div className="flex justify-between">
-					<p className="font-bold">Last period date</p>
-					<p className="text-[#f7f74b]">{formatDate(user.lastPeriod)}</p>
+					<p className="text-md font-semibold text-gray-700">
+						Last period date
+					</p>
+					<p className="text-opacity-90 text-pink-700">
+						{formatDate(user.lastPeriod)}
+					</p>
 				</div>
 			</div>
 
 			{/* Upcoming */}
-			<div className="bg-[#95275eab] text-white p-5 rounded-md">
-				<h2 className="text-xl font-bold mb-4">Upcoming</h2>
+			<div className="bg-white p-4 rounded-xl mb-4 shadow-md">
+				<h2 className="text-md font-semibold text-gray-700 mb-4">Upcoming</h2>
 
 				<div className="space-y-4">
-					<div className="bg-white bg-opacity-10 p-3 rounded-xl shadow-sm">
+					<div className="bg-gray-100 p-3 rounded-xl">
 						<div className="flex flex-col gap-2">
-							<p className="flex gap-2 text-base font-bold text-[#fdfdfd]">
+							<p className="flex gap-2 text-base font-bold text-opacity-90 text-pink-700">
 								<span>
-									<Droplet className="text-[#f7f74b]" size={24} />
+									<Droplet
+										className="text-opacity-90 text-pink-700"
+										size={24}
+									/>
 								</span>{" "}
 								Next Period
 							</p>
-							<p className="text-4xl text-[#f7f74b]">
+							<p className="text-4xl text-opacity-90 text-pink-700">
 								{formatDate(cycleInfo.nextPeriodDate).split(",")[0]}
 							</p>
 						</div>
 					</div>
 
-					<div className="bg-white bg-opacity-10 p-3 rounded-xl shadow-sm">
+					<div className="bg-gray-100 p-3 rounded-xl">
 						<div className="flex flex-col gap-2">
-							<p className="flex gap-2 text-base font-bold text-[#fdfdfd]">
+							<p className="flex gap-2 text-base font-bold text-pink-700">
 								<span>
-									<Moon className="text-[#f7f74b]" size={24} />
+									<Moon className="text-pink-700" size={24} />
 								</span>{" "}
 								Fertility Window
 							</p>
-							<p className="text-4xl text-[#f7f74b]">
+							<p className="text-4xl text-pink-700">
 								{formatDate(cycleInfo.fertileWindow.start).split(",")[0]} -{" "}
 								{formatDate(cycleInfo.fertileWindow.end).split(",")[0]}
 							</p>
-							<p className="text-sm text-[#f7f74b]">
+							<p className="text-sm text-pink-700">
 								{getFertilityStatusMessage()}
 							</p>
 						</div>
 					</div>
 
-					<div className="flex justify-between items-center bg-white bg-opacity-10 p-3 rounded-xl shadow-sm">
+					<div className="flex justify-between items-center bg-gray-100 p-3 rounded-xl">
 						<div className="flex items-center">
-							<Sun className="text-[#f7f74b] mr-3" size={24} />
+							<Sun className="text-pink-700 mr-3" size={24} />
 							<div>
-								<p className="text-base font-bold text-[#fdfdfd]">Ovulation</p>
-								<p className="text-sm text-[#f7f74b]">
+								<p className="text-base font-bold text-pink-700">Ovulation</p>
+								<p className="text-sm text-pink-700">
 									{formatDate(cycleInfo.ovulationDate)}
 								</p>
 							</div>

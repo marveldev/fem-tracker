@@ -119,19 +119,19 @@ const CycleWheel = () => {
 				</svg>
 
 				{/* Icons for each phase */}
-				<div className="flex absolute top-4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white">
+				<div className="flex absolute top-4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-pink-800">
 					<Droplet size={20} />
 					<span>Menstrual</span>
 				</div>
-				<div className="absolute top-1/2 right-[-1em] transform translate-y-1/2 text-white">
+				<div className="absolute top-1/2 right-[-1em] transform translate-y-1/2 text-pink-800">
 					<Moon size={20} />
 					<span>Follicular</span>
 				</div>
-				<div className="flex flex-col items-center absolute bottom-5 left-1/2 transform -translate-x-1/2 translate-y-1/2 text-white">
+				<div className="flex flex-col items-center absolute bottom-5 left-1/2 transform -translate-x-1/2 translate-y-1/2 text-pink-800">
 					<Sun size={20} />
 					<span>Ovulation</span>
 				</div>
-				<div className="flex flex-col items-center absolute top-1/2 left-0 transform -translate-y-1/2 text-white">
+				<div className="flex flex-col items-center absolute top-1/2 left-0 transform -translate-y-1/2 text-pink-800">
 					<Heart size={20} />
 					<span>Luteal</span>
 				</div>
@@ -148,7 +148,7 @@ const CycleWheel = () => {
 			</div>
 
 			{/* Legend */}
-			<div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-4 text-sm text-[#f7f74b] bg-white bg-opacity-10 p-3 rounded-xl shadow-sm">
+			<div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-4 text-sm bg-gray-100 p-3 rounded-xl">
 				<div className="flex items-center">
 					<div className="w-3 h-3 rounded-full bg-red-400 mr-2"></div>
 					<span>Menstrual ({user.periodLength} days)</span>
