@@ -12,6 +12,7 @@ import {
 	Calendar,
 	CycleLengthOnboarding,
 	Home,
+	NotFound,
 	PeriodDateOnboarding,
 	PeriodLengthOnboarding,
 	Settings,
@@ -73,6 +74,7 @@ function AppContent({ userData, setUserData, showSnackbar }) {
 					<Route path="/track/:date" element={<Track />} />
 					<Route path="/settings" element={<Settings />} />
 					<Route path="/home" element={<Home />} />
+					<Route path="*" element={<NotFound />} />
 				</Routes>
 
 				{showHeaderAndFooter && (
